@@ -1,0 +1,64 @@
+--Selects distinct dates where products were sold
+SELECT DISTINCT dateoftransaction FROM ProductSale ORDER BY dateoftransaction ASC
+
+--Shows most popular products sold
+SELECT productid,COUNT(*)  AS "Times Sold" FROM productsale GROUP BY productid HAVING COUNT(*) > 1 ORDER BY COUNT(*) DESC
+
+--Shows the orders fulfilled by an employee on specified dates
+SELECT 'Employee Sales Query', orderid, dateoftransaction FROM productsale WHERE employeeid = 003 AND (dateoftransaction = '2020-09-16' OR dateoftransaction = '2020-09-15')
+
+--Selects all the employees at a given store
+SELECT DISTINCT employeeid,position,storeid, FirstName,LastName FROM Employee WHERE position = 'Manager' ORDER BY storeid DESC
+
+--Shows customers in order of highest balance
+SELECT customer.FirstName,customer.LastName,customer.balance FROM customer WHERE Balance > 0 ORDER BY balance DESC
+
+--Shows how many customres are in the database
+SELECT 'Unique Customers', count(customerid) FROM Customer
+
+--Selects products with a given budget and category
+SELECT * FROM Product WHERE ProductCategory = 'Camera' AND price < 250
+
+--Orders products in a category by price
+SELECT * FROM Product WHERE ProductCategory = 'Audio' ORDER BY price ASC
+
+--Shows store exclusive items
+SELECT productid FROM stocks WHERE storeid = 2 MINUS SELECT productid FROM stocks WHERE storeid = 1 ORDER BY productid DESC
+
+--Shows store stock of products in ascending order
+SELECT productid, 'Store Stock is :', quantity FROM Stocks WHERE quantity > 0ORDER BY productid ASC
+
+--Shows the quantities purchased for a certain product along with the customers that purchsed it
+SELECT customer.FirstName,customer.LastName,buys.quantity FROM customer,buys WHERE customer.customerid = buys.customerid AND buys.productid IN (SELECT productid  FROM product WHERE product.productid = 4)
+
+--Table Views
+
+--SALESHISTORY VIEW
+SELECT * FROM saleshistory WHERE rentallength = 7 ORDER BY dateoftransaction
+
+-- TRENDINGPRODUCTS VIEW
+SELECT * FROM trendingproducts ORDER BY productid
+
+-- STOCKQUERY VIEW
+SELECT *FROM StockQuery WHERE productid = 2 AND quantity > 15
+
+--Joins the PRODUCTSALES table with SHOP table to provide a more descriptive sales history for all stores
+SELECT productsale.orderid, productsale.dateoftransaction,productsale.rentalLength,productsale.productid,productsale.storeid,shop.storeinformation FROM productsale INNER JOIN shop ON productsale.storeid = shop.storeid ORDER BY dateoftransaction DESC
+
+
+--Joins the CUSTOMER table with BUYS table to diplay products purchased by each customer
+SELECT customer.FirstName,customer.LastName,Customer.balance,buys.productid,buys.quantity FROM Customer LEFT JOIN buys ON buys.customerid = customer.customerid ORDER BY customer.customerid
+
+
+--Joins the PRODUCT table with STOCKS table to show each product and its stock level at each store
+SELECT product.productid,product.ProductName ,product.productcategory,product.productbrand,product.price,stocks.quantity,stocks.storeid FROM product FULL JOIN stocks ON product.productid = stocks.productid ORDER BY storeid
+
+
+
+
+
+
+
+
+
+
