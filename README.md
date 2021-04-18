@@ -1,4 +1,6 @@
 This is a simple JavaFX GUI to communicate with an Oracle sql database.
+The project represents a Photo and Video Equipment Rental database Management System. 
+For more information about the project scope, check the OpenMe.pdf.
 
 If you wish to run the application in your machine then simply edit the Connect() and populateTables() methods accordingly:
 
