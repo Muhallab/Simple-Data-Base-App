@@ -12,6 +12,4 @@ PopulateTables():
 
 The file queries.txt includes sample queries that could be used to display useful results
 
-bless up
-
-P.S: you must first connectto databse, then create tables, and finally populate tables to see any results
+P.S: you must first connect to the databse, then create tables, and finally populate tables to see any results
